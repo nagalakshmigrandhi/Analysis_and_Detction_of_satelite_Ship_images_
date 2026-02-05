@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+    
+        {% block hero %}
+        <!-- Content for the page goes here -->
+        <div class="container" id="aboutus">
+            <div class="content-header">
+                <h1>Ship Identification on Satellite Images</h1>
+                <p>Our advanced system uses satellite imagery to detect and identify ships in the ocean, helping in maritime surveillance, traffic management, and environmental monitoring.</p>
+            </div>
+    
+            <div class="content-description">
+                <h2>How Our Ship Detection System Works</h2>
+                <p>Our ship detection system works by combining the power of deep learning with a user-friendly web interface. Users begin by accessing the Django-based web application, where they can upload satellite images containing potential ships. Once an image is uploaded, it is processed by the YOLO-NAS (You Only Look Once – Neural Architecture Search) model, which is a high-speed, high-accuracy object detection algorithm. The model analyzes the image and identifies ships by drawing bounding boxes around them and assigning confidence scores to each detection. These results are then sent back to the Django server, which displays the processed image and detection information to the user through the web interface. This system enables fast, automated, and precise ship detection in real-time and can be used for maritime surveillance, coastal monitoring, and defense applications."About Us" page.</p>
+    
+                <h3>Key Features of the System</h3>
+                <ul>
+                    <li>High Accuracy: We achieve exceptional accuracy in identifying vessels, even amidst complex backgrounds.</li>
+                    <li>Real-time Processing (where applicable): Our system processes satellite images in real-time, enabling immediate monitoring of maritime activity (processing times will vary depending on the image resolution and the current load on our servers).</li>
+                    <li>Scalable Infrastructure: Our system's architecture is designed to handle a large volume of data, ensuring seamless operation as our dataset expands.</li>
+                    <li>Robustness: Our system is designed to handle variability in lighting, weather conditions, and image quality, ensuring consistent accuracy in various environments.</li>
+                </ul>
+    
+            </div>
+        </div>
+        {% endblock %}
+

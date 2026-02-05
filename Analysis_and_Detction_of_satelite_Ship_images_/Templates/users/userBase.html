@@ -1,0 +1,302 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship Detection System - User Panel</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+          font-family: 'Roboto', sans-serif;
+          margin: 0;
+          padding: 0;
+          background-image: url('ss.jpg'); /* Replace with your image */
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          font-size: large;
+
+          color: #040303;
+          text-align: center;
+          overflow-x: hidden;
+          background-attachment: fixed;
+          min-height: 100vh;
+      }
+
+      nav {
+          background-color: black;
+          overflow: hidden;
+          padding: 15px 0;
+          box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+          position: sticky;
+          top: 0;
+          z-index: 1;
+      }
+
+      nav .logo {
+          float: left;
+          color: #fdfcf8;
+          font-size: 28px;
+          font-weight: bold;
+          padding: 14px 20px;
+          text-decoration: none;
+          text-align: center;
+          letter-spacing: 2px;
+      }
+
+      nav .logo:hover {
+          transform: scale(1.1);
+      }
+
+      nav ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          text-align: center;
+      }
+
+      nav ul li {
+          display: inline-block;
+          margin: 0 15px;
+      }
+
+      nav ul li a {
+          display: block;
+          color: #ffffff;
+          padding: 14px 20px;
+          text-decoration: none;
+          text-align: center;
+          border-radius: 5px;
+          font-size: 18px;
+          transition: background-color 0.3s, transform 0.3s ease;
+      }
+
+      nav ul li a:hover {
+          background-color: rgba(255, 255, 255, 0.2);
+          transform: translateY(-5px);
+      }
+
+      footer {
+          background-color: rgba(0, 0, 0, 0.7);
+          color: #ffffff;
+          text-align: center;
+          padding: 15px 0;
+          position: bottom;
+          width: 100%;
+         
+      }
+
+      .container {
+          width: 80%;
+          margin: 30px auto;
+          padding: 30px;
+          background-color: rgba(251, 248, 248, 0.9) transparent;
+          box-shadow: 0px 0px 15px rgba(251, 248, 248, 0.941);
+          color: #070505;
+          border-radius: 8px;
+          max-width: 1000px;
+      }
+
+      .content-header h1 {
+          color: #ffcc00;
+          font-size: 40px;
+          font-weight: bold;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          margin-bottom: 20px;
+      }
+
+      .content-header p {
+          font-size: 18px;
+          line-height: 1.8;
+          color: #f8f2f2;
+          margin-bottom: 30px;
+      }
+
+      .content-description h2, .content-description h3 {
+          color: #ffcc00;
+          font-size: 30px;
+          font-weight: bold;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          margin-bottom: 20px;
+      }
+
+      .content-description ul {
+          list-style-type: none;
+          margin-left: 0;
+          padding-left: 0;
+          font-size: 18px;
+          line-height: 1.8;
+          color: #333;
+      }
+
+      .content-description li {
+          margin-bottom: 15px;
+          position: relative;
+          padding-left: 30px;
+      }
+
+      .content-description li:before {
+          content: "✔";
+          position: absolute;
+          left: 0;
+          top: 0;
+          color: #ffcc00;
+      }
+
+      .feature-image {
+          width: 100%;
+          margin-top: 30px;
+          border-radius: 8px;
+          box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+          transition: transform 0.3s ease-in-out;
+      }
+
+      .feature-image:hover {
+          transform: scale(1.05);
+      }
+
+      /* Add some spicy hover effects for links and images */
+      .content-header h1:hover {
+          color: #ff6600;
+          text-shadow: 2px 2px 10px rgba(250, 246, 246, 0.935);
+      }
+
+      .content-description img {
+          max-width: 100%;
+          height: auto;
+          border-radius: 8px;
+          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+          margin-bottom: 10px;
+          transition: transform 0.3s ease;
+      }
+
+      .content-description img:hover {
+          transform: scale(1.05);
+      }
+
+      /* Background Animation for a spicy effect */
+      @keyframes spicyBackground {
+          0% {
+              background-position: 0 0;
+          }
+          50% {
+              background-position: 100% 100%;
+          }
+          100% {
+              background-position: 0 0;
+          }
+      }
+
+      body {
+          animation: spicyBackground 30s ease infinite;
+          background-image: linear-gradient(45deg, #07f93f, #04fbe6, #040cee);
+          background-size: 300% 300%;
+      }
+      .hero
+      {
+        margin-bottom : 200px;
+
+      }
+      nav {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    }
+
+    nav .logo,
+    nav ul li a {
+        color: var(--white);
+    }
+
+    nav ul li a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    nav ul li a.btn {
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius);
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    nav ul li a.btn:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+    }
+
+    footer {
+        background-color: var(--light-bg);
+        padding: 1rem 0;
+        margin-top: 3rem;
+        text-align: center;
+    }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="{% url 'users:home' %}" class="logo">Ship Detection</a>
+            <ul>
+                <li><a href="{% url 'users:home' %}">Dashboard</a></li>
+                <li><a href="{% url 'users:prediction' %}">Ship Detection</a></li>
+                <li><a href="#">History</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="{% url 'users:logout' %}" class="btn btn-secondary">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    {% if messages %}
+    <div class="container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="hero">
+        {% block hero %}
+        <!-- Content for the page goes here -->
+        {% endblock %}
+    </div>
+
+    <section id="featured-services" class="featured-services" id="AboutUS">
+        <div class="container">
+            <div class="service-item">
+                <div class="icon">🚢</div>
+                <h3>Ship Detection</h3>
+                <p>Identify various types of ships in satellite images.</p>
+            </div>
+            <div class="service-item">
+                <div class="icon">📷</div>
+                <h3>Image Analysis</h3>
+                <p>Analyze satellite images to detect ships and monitor maritime activity.</p>
+            </div>
+            <div class="service-item">
+                <div class="icon">📊</div>
+                <h3>Data Visualization</h3>
+                <p>Clear and insightful representation of ship detection data.</p>
+            </div>
+            <div class="service-item">
+                <div class="icon">🤖</div>
+                <h3>AI-Powered Predictions</h3>
+                <p>Use advanced AI models to predict ship movement and behavior.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Ship Detection System. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+{% endblock %}

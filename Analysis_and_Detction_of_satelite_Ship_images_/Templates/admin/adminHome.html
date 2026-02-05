@@ -1,0 +1,96 @@
+{% extends "admin/adminBase.html" %}
+
+{% block content %}
+<div class="content-header">
+    <h1>Welcome to the Admin Dashboard</h1>
+    <p>As an admin, you can manage the ship detection system, view reports, and analyze satellite images for ship identification.</p>
+</div>
+
+<div class="content-description">
+    <h2>How Our Ship Detection System Works</h2>
+    <p>Using high-resolution satellite images, we apply state-of-the-art object detection models to accurately identify ships in the ocean. Our system leverages cutting-edge machine learning algorithms and sophisticated image processing techniques to detect vessels, even in challenging weather conditions or dense maritime traffic.</p>
+    
+    <h3>Key Features of the System</h3>
+    <ul>
+        <li>High Accuracy: Exceptional accuracy in ship detection using advanced AI models</li>
+        <li>Real-time Processing: Quick analysis of satellite imagery</li>
+        <li>Comprehensive Reports: Detailed reports with ship locations and classifications</li>
+        <li>User Management: Complete control over user access and permissions</li>
+    </ul>
+</div>
+
+<div class="stats-section">
+    <h2>System Statistics</h2>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Total Users</h3>
+            <p class="stat-number">{{ users.count }}</p>
+        </div>
+    </div>
+</div>
+
+<style>
+.content-header {
+    margin-bottom: 2rem;
+}
+
+.content-header h1 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.content-description {
+    margin-bottom: 3rem;
+}
+
+.content-description h2 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.content-description h3 {
+    color: var(--text-color);
+    margin: 1.5rem 0 1rem;
+}
+
+.content-description ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+}
+
+.content-description li {
+    margin-bottom: 0.5rem;
+}
+
+.stats-section {
+    margin-top: 3rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.stat-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.stat-card h3 {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+</style>
+{% endblock %}

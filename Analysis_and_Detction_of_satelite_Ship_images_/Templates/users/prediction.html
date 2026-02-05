@@ -1,0 +1,294 @@
+{% block hero %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'users:home' %}">Ship Detection</a>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="{% url 'users:home' %}">Home</a>
+            <a class="nav-item nav-link" href="{% url 'users:prediction' %}">Prediction</a>
+            <a class="nav-item nav-link" href="{% url 'users:history' %}">History</a>
+            <a class="nav-item nav-link" href="{% url 'users:logout' %}">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="header-section">
+        <h2>Ship Detection</h2>
+        <a href="{% url 'users:home' %}" class="btn btn-primary previous-btn">Previous</a>
+    </div>
+    
+    <div class="upload-section">
+        <p>Upload a satellite image to detect ships</p>
+        
+        <form method="POST" enctype="multipart/form-data" class="upload-form">
+            {% csrf_token %}
+            <div class="file-input-wrapper">
+                <input type="file" name="image" id="image" accept="image/*" required>
+                <label for="image" class="custom-file-upload">
+                    Choose Image
+                </label>
+                <span id="file-name">No file chosen</span>
+            </div>
+            <button type="submit" class="btn btn-primary">Detect Ships</button>
+        </form>
+    </div>
+
+    {% if message %}
+    <div class="alert {% if success %}alert-success{% else %}alert-error{% endif %}">
+        {{ message }}
+    </div>
+    {% endif %}
+
+    {% if input_image and output_image %}
+    <div class="results-section">
+        <div class="image-comparison">
+            <div class="image-container">
+                <h3>Input Image</h3>
+                <img src="{{ input_image }}" alt="Input Image">
+            </div>
+            <div class="image-container">
+                <h3>Detection Results</h3>
+                <img src="{{ output_image }}" alt="Output Image">
+                {% if num_ships > 0 %}
+                <p class="detection-info">Detected {{ num_ships }} ship{{ num_ships|pluralize }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.navbar {
+    background-color: #1a237e;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    padding: 1rem 0;
+}
+.navbar-brand {
+    color: white !important;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+.navbar-brand:hover {
+    color: #ffffff !important;
+    transform: translateY(-2px);
+}
+.navbar-nav {
+    margin-left: auto;
+}
+.nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    padding: 0.75rem 1.5rem !important;
+    margin: 0 0.5rem;
+    transition: all 0.3s ease;
+    border-radius: 25px;
+    position: relative;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+.nav-link:hover {
+    color: white !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    transform: translateY(-2px);
+}
+.nav-link:hover::after {
+    width: 80%;
+}
+.nav-link.active {
+    color: white !important;
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+.nav-link.active::after {
+    width: 80%;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+.upload-section {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.upload-section h2 {
+    color: #1a237e;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+.upload-form {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.file-input-wrapper {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    position: relative;
+}
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: #1a237e;
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.custom-file-upload:hover {
+    background-color: #283593;
+    transform: translateY(-2px);
+}
+#file-name {
+    display: block;
+    margin-top: 0.5rem;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+.btn-primary {
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    background-color: #1a237e;
+    border: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    transition: all 0.6s ease;
+    z-index: -1;
+}
+.btn-primary:hover {
+    background-color: #283593;
+    transform: translateY(-2px);
+}
+.btn-primary:hover::before {
+    transform: translate(-50%, -50%) scale(1.5);
+}
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Style for the Previous button in the history page */
+.btn-primary.previous-btn {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 25px;
+}
+.btn-primary.previous-btn:hover {
+    background-color: #283593;
+    transform: translateY(-2px);
+}
+
+.results-section {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.image-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+.image-container {
+    text-align: center;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.image-container h3 {
+    color: #1a237e;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+.image-container img {
+    max-width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.detection-info {
+    margin-top: 1rem;
+    color: #1a237e;
+    font-weight: 600;
+}
+.alert {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    font-weight: 500;
+}
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.header-section h2 {
+    color: #1a237e;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+</style>
+
+<script>
+document.getElementById('image').addEventListener('change', function() {
+    var fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+    document.getElementById('file-name').textContent = fileName;
+});
+</script>
+{% endblock %}

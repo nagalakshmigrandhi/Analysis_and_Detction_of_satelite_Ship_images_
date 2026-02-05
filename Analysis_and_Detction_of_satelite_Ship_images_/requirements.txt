@@ -1,0 +1,4 @@
+Django==4.2.7
+ultralytics==8.0.196
+opencv-python==4.8.1.78
+Pillow==10.1.0

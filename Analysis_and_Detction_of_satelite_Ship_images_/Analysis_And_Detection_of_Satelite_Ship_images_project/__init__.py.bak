@@ -1,0 +1,34 @@
+import os
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from .views import views as mv
+from Admin.views import adminviews as av
+from Users.views import userViews as uv
+from Users.model import UserRegistrationModel, db  # Ensure db is initialized in your model
+
+
+def create_app():
+    app = Flask(__name__, template_folder=os.path.abspath("Templates"))
+
+    # Secret key for session management
+    app.config['SECRET_KEY'] = "hhhhhhhhhhhhhhhhh"  # Corrected the typo
+
+    # Register blueprints
+    app.register_blueprint(mv, url_prefix='/')
+    app.register_blueprint(av, url_prefix='/')  # Corrected the typo
+    app.register_blueprint(uv, url_prefix='/')  # Corrected the typo
+
+    # Configure the SQLite database URI and options
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user_registration.db'  # SQLite database URI
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable modification tracking to save resources
+
+    # Initialize the SQLAlchemy object and bind it to the Flask app
+    db.init_app(app)  # This binds the `db` to the Flask app
+
+    # Ensure the database tables are created (usually done during app setup)
+    UPLOAD_FOLDER = 'static/uploads'
+    if not os.path.exists(UPLOAD_FOLDER):
+        os.makedirs(UPLOAD_FOLDER)
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+    return app
